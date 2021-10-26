@@ -1,0 +1,1 @@
+docker run --name mysql-web -e MYSQL_ROOT_PASSWORD=root -d mysql:latest -p 3306:3306
