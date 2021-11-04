@@ -1,0 +1,31 @@
+version: "3"
+
+services:
+    grafana-sw:
+        image: grafana/grafana-oss:8.2.3-ubuntu
+        container_name: grafana-sw
+        ports:
+          - "3000:3000"
+        environment:
+          GF_SECURITY_ADMIN_PASSWORD: "admin"
+          GF_SECURITY_ADMIN_USER: "admin"
+        depends_on:
+          - "mysql-sw"
+        volumes: 
+          - grafana-storage-sw:/var/lib/grafana grafana/grafana-enterprise
+  
+    mysql-sw:
+        image: mysql:5.7
+        container_name: mysql-sw
+        ports:
+          - "3306:3306"
+        environment:
+          MYSQL_ROOT_PASSWORD: "root"
+        volumes:
+          - mysql-grafana-storage-sw:/var/lib/mysql
+
+volumes: 
+  grafana-storage-sw:
+    external: true
+  mysql-grafana-storage-sw:
+    external: true
