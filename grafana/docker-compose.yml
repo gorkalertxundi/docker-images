@@ -3,7 +3,7 @@ version: "3"
 services:
     grafana-hmi:
         image: grafana/grafana-oss:8.2.3-ubuntu
-        container_name: grafana-sw
+        container_name: grafana-hmi
         ports:
           - "3000:3000"
         environment:
@@ -16,7 +16,7 @@ services:
   
     mysql-hmi:
         image: mysql:5.7
-        container_name: mysql-sw
+        container_name: mysql-hmi
         ports:
           - "3306:3306"
         environment:
