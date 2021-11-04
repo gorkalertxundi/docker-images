@@ -10,7 +10,7 @@ services:
           GF_SECURITY_ADMIN_PASSWORD: "admin"
           GF_SECURITY_ADMIN_USER: "admin"
         depends_on:
-          - "mysql-sw"
+          - "mysql-hmi"
         volumes: 
           - grafana-storage-hmi:/var/lib/grafana grafana/grafana-enterprise
   
