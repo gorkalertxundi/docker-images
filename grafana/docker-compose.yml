@@ -1,7 +1,7 @@
 version: "3"
 
 services:
-    grafana-sw:
+    grafana-hmi:
         image: grafana/grafana-oss:8.2.3-ubuntu
         container_name: grafana-sw
         ports:
@@ -12,9 +12,9 @@ services:
         depends_on:
           - "mysql-sw"
         volumes: 
-          - grafana-storage-sw:/var/lib/grafana grafana/grafana-enterprise
+          - grafana-storage-hmi:/var/lib/grafana grafana/grafana-enterprise
   
-    mysql-sw:
+    mysql-hmi:
         image: mysql:5.7
         container_name: mysql-sw
         ports:
@@ -22,10 +22,10 @@ services:
         environment:
           MYSQL_ROOT_PASSWORD: "root"
         volumes:
-          - mysql-grafana-storage-sw:/var/lib/mysql
+          - mysql-grafana-storage-hmi:/var/lib/mysql
 
 volumes: 
-  grafana-storage-sw:
+  grafana-storage-hmi:
     external: true
-  mysql-grafana-storage-sw:
+  mysql-grafana-storage-hmi:
     external: true
