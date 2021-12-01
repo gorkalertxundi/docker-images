@@ -1,0 +1,59 @@
+version: '3'
+
+services:
+  nginx-proxy:
+    image: jc21/nginx-proxy-manager:latest
+    container_name: nginx-proxy
+    restart: always
+    ports:
+      - "80:80"
+      - "81:81"
+      - "443:443"
+    environment:
+      DB_SQLITE_FILE: "/data/database.sqlite"
+    volumes:
+      - ./data:/data
+      - ./letsencrypt:/etc/letsencrypt
+    depends_on:
+      - db
+  db:
+    image: yobasystems/alpine-mariadb:latest
+    container_name: nginx-proxy-db
+    restart: always
+    environment:
+      - MYSQL_ROOT_PASSWORD="npm"
+      - MYSQL_DATABASE="npm"
+      - MYSQL_USER="npm"
+      - MYSQL_PASSWORD="npm"
+    volumes:
+      - ./data/mysql:/var/lib/mysql
+
+  sonarqube:
+    image: sonarqube
+    container_name: sonarqube
+    restart: always
+    ports:
+      - "9000:9000"
+      - "9092:9092"
+    volumes:
+      - sonarqube-data:/opt/sonarqube/data
+      - sonarqube-logs:/opt/sonarqube/logs
+      - sonarqube-extensions:/opt/sonarqube/extensions
+
+  jenkins:
+    image: jenkins/jenkins:jdk11
+    container_name: jenkins
+    restart: always
+    ports:
+      - "8080:8080"
+      - "50000:50000"
+    volumes:
+      - ./jenkins_workplace:/var/jenkins_home
+
+volumes:
+  sonarqube-data:
+    external: true
+  sonarqube-logs:
+    external: true
+  sonarqube-extensions:
+    external: true
